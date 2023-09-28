@@ -50,5 +50,30 @@ namespace JornadaMilhas.Controllers
                 StatusCode = 201
             };
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateDepoimento([FromBody] UpdateDepoimentoDto depoimentoDto, int id)
+        {
+            var depoimento = _context.Depoimentos.FirstOrDefault(d => d.Id == id);
+            if (depoimento == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(depoimentoDto, depoimento);
+            _context.SaveChanges();
+            return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteDepoimento(int id)
+        {
+            var depoimento = _context.Depoimentos.FirstOrDefault(d => d.Id == id);
+            if (depoimento == null)
+            {
+                return NotFound();
+            }
+            _context.Depoimentos.Remove(depoimento);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
