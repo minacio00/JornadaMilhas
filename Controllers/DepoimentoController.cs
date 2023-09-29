@@ -1,14 +1,16 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using JornadaMilhas.Data;
 using JornadaMilhas.Data.Dtos;
 using JornadaMilhas.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JornadaMilhas.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/depoimentos")]
     [Consumes("application/json")]
     public class DepoimentoController : ControllerBase
     {
@@ -21,9 +23,9 @@ namespace JornadaMilhas.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDepoimentos()
+        public async Task<IActionResult> GetDepoimentos()
         {
-            List<Depoimento> depoimentos = _context.Depoimentos.ToList();
+            List<Depoimento> depoimentos = await _context.Depoimentos.ToListAsync();
             return Ok(depoimentos);
         }
         [HttpGet("{id}")]
@@ -74,6 +76,20 @@ namespace JornadaMilhas.Controllers
             _context.SaveChanges();
 
             return NoContent();
+        }
+
+        [HttpGet("/depoimentos-home")]
+        public async Task<IActionResult> GetDepoimentosRandom()
+        {
+            // Todo: Sometimes it does not select 3
+            var random = new Random();
+            int randomOffeset = random.Next(3, await _context.Depoimentos.CountAsync()); // ??????
+            List<Depoimento> depoimentos =  _context.Depoimentos
+            .OrderBy(x => randomOffeset)
+            .Skip(randomOffeset)
+            .Take(3)
+            .ToList();
+            return Ok(depoimentos);
         }
     }
 }
