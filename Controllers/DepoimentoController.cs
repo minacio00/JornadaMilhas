@@ -47,7 +47,7 @@ namespace JornadaMilhas.Controllers
             _context.Depoimentos.Add(depoimento);
             _context.SaveChanges();
 
-            return new ObjectResult(depoimento) {
+            return new ObjectResult(depoimentoDto) {
                 StatusCode = 201
             };
         }

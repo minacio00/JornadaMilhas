@@ -9,6 +9,6 @@ public class DestinosProfile : Profile
     public DestinosProfile()
     {
         CreateMap<CreateDestinoDto, Destino>();
-        CreateMap<Depoimento, ReadDepoimentoDto>();
+        CreateMap<Destino, ReadDestinoDTO>();
     }
 }

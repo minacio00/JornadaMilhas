@@ -40,6 +40,18 @@ namespace JornadaMilhas.Controllers
             var destinoDto = _mapper.Map<ReadDestinoDTO>(destino);
             return Ok(destinoDto);
         }
+        [HttpGet("search")]
+        public IActionResult GetDestinoByName([FromQuery] string nome)
+        {
+            Console.WriteLine(nome);
+            var destinos = _context.Destinos.Where(d => d.Nome == nome).ToList();
+            if (destinos == null)
+            {
+                return NotFound(new {mensagem = "Nenhum destino foi encontrado"});
+            }
+            List<ReadDestinoDTO> destinosDto = _mapper.Map<List<ReadDestinoDTO>>(destinos);
+            return Ok(destinosDto);
+        }
 
         [HttpPost]
         public IActionResult CreateDestino([FromBody] CreateDestinoDto destinoDto)
