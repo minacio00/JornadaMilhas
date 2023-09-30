@@ -1,9 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using JornadaMilhas.Data;
 using JornadaMilhas.Data.Dtos;
 using JornadaMilhas.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +12,7 @@ namespace JornadaMilhas.Controllers
     [Consumes("application/json")]
     public class DepoimentoController : ControllerBase
     {
+
         private readonly JornadaMilhasContext _context;
         private readonly IMapper _mapper;
         public DepoimentoController(JornadaMilhasContext context, IMapper mapper)

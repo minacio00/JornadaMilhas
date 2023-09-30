@@ -10,4 +10,5 @@ public class JornadaMilhasContext : DbContext
         
     }   
     public DbSet<Depoimento> Depoimentos {get; set;}
+    public DbSet<Destino> Destinos {get; set;}
 }
