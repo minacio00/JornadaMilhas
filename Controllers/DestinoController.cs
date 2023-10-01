@@ -1,4 +1,5 @@
 
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using JornadaMilhas.Data;
 using JornadaMilhas.Data.Dtos;
@@ -41,9 +42,12 @@ namespace JornadaMilhas.Controllers
             return Ok(destinoDto);
         }
         [HttpGet("search")]
-        public IActionResult GetDestinoByName([FromQuery] string nome)
+        public IActionResult GetDestinoByName([FromQuery][Required(ErrorMessage ="query 'nome' não pode ser vazio")] string nome)
         {
-            Console.WriteLine(nome);
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                return BadRequest(new {mensagem = "Nome nao pode ser vazio"});
+            }
             var destinos = _context.Destinos.Where(d => d.Nome == nome).ToList();
             if (destinos == null)
             {
